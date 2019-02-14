@@ -21,7 +21,7 @@ print(data_set.columns)
 ##Numerical features: These features have numerical values (ApplicantIncome, CoapplicantIncome, LoanAmount, Loan_Amount_Term)
 
 ##Independent Variable (Categorical)
-# plt.subplot(221)
+plt.subplot(221)
 # data_set['Gender'].value_counts(normalize=True).plot.bar(figsize=(20,10), title= 'Gender')
 # plt.subplot(222)
 # data_set['Married'].value_counts(normalize=True).plot.bar(title= 'Married')
@@ -62,11 +62,12 @@ print(data_set.columns)
 # plt.subplot(122)
 # data_set['CoapplicantIncome'].plot.box(figsize=(16,5))
 #
-plt.figure(5)
-plt.subplot(121)
-df=data_set.dropna()
-sns.distplot(df['LoanAmount']);
-
-plt.subplot(122)
-data_set['LoanAmount'].plot.box(figsize=(16,5))
+# plt.figure(5)
+# plt.subplot(121)
+# df=data_set.dropna()
+# sns.distplot(df['LoanAmount']);
+#
+# plt.subplot(122)
+# data_set['LoanAmount'].plot.box(figsize=(16,5))
+print(data_set[data_set['Loan_Status']].corr())
 plt.show()

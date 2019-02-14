@@ -24,6 +24,7 @@ import seaborn as sns
 
 # plt.figure(1)
 Gender=pd.crosstab(train['Gender'],train['Loan_Status'])
+Gender.plot(kind='bar',stacked=True)
 Gender.div(Gender.sum(1).astype(float), axis=0).plot(kind="bar", stacked=True, figsize=(4,4))
 plt.show()
 
@@ -33,6 +34,7 @@ Education=pd.crosstab(train['Education'],train['Loan_Status'])
 Self_Employed=pd.crosstab(train['Self_Employed'],train['Loan_Status'])
 
 Married.div(Married.sum(1).astype(float), axis=0).plot(kind="bar", stacked=True, figsize=(4,4))
+Married.plot(kind='bar')
 plt.show()
 
 Dependents.div(Dependents.sum(1).astype(float), axis=0).plot(kind="bar", stacked=True)
