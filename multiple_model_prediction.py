@@ -23,12 +23,19 @@ train['Loan_Status']= train['Loan_Status'].map({'N':0,'Y':1}).astype('int')
 train['Property_Area']= train['Property_Area'].map({'Semiurban':0,'Urban':1,'Rural':2}).astype('int')
 train['Dependents']= train['Dependents'].map({'0':0,'1':1,'2':2,'3+':'3'}).astype('int')
 
+
+train['total_income']=train['ApplicantIncome']+train['CoapplicantIncome']
+# train = train.drop(['CoapplicantIncome','ApplicantIncome','Property_Area','Self_Employed','Gender','Dependents','Education','Loan_Amount_Term','Married'],axis=1)
+test['total_income']=test['ApplicantIncome']+test['CoapplicantIncome']
+# test = test.drop(['CoapplicantIncome','ApplicantIncome','Property_Area','Self_Employed','Gender','Dependents','Education','Loan_Amount_Term','Married'],axis=1)
+
+
 # print(test['LoanAmount'])
 # # Feature Scaling
 
 sc = MinMaxScaler()
-train[['LoanAmount','ApplicantIncome','CoapplicantIncome']] = sc.fit_transform(train[['LoanAmount','ApplicantIncome','CoapplicantIncome']])
-test[['LoanAmount','ApplicantIncome','CoapplicantIncome']] = sc.fit_transform(test[['LoanAmount','ApplicantIncome','CoapplicantIncome']])
+train[['LoanAmount','total_income']] = sc.fit_transform(train[['LoanAmount','total_income']])
+test[['LoanAmount','total_income']] = sc.fit_transform(test[['LoanAmount','total_income']])
 
 # print(train['LoanAmount'])
 # print(test)
@@ -37,7 +44,7 @@ test=test.drop('Loan_ID',axis=1)
 X = train.drop('Loan_Status',1)
 y = train['Loan_Status']
 
-X=pd.get_dummies(X,prefix_sep='_', drop_first=True)
+X=pd.get_dummies(X,prefix_sep='_')
 train=pd.get_dummies(train)
 test=pd.get_dummies(test)
 validation_size = 0.2
@@ -70,3 +77,7 @@ for name, model in models:
         names.append(name)
         msg = "%s: %f (%f)" % (name, cv_results.mean(), cv_results.std())
         print(msg)
+
+
+importances=pd.Series(model.feature_importances_, index=X.columns)
+importances.plot(kind='barh', figsize=(12,8))
